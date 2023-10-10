@@ -1,7 +1,15 @@
-FROM alpine:3.15.4
+FROM golang:1.18 as build
 
-COPY ./src /app
+WORKDIR /go/src/app
+COPY . .
 
-WORKDIR /app
+RUN go mod download
+RUN go vet -v
+RUN go test -v
 
-CMD ./example.sh
+RUN CGO_ENABLED=0 go build -o /go/bin/app
+
+FROM gcr.io/distroless/static-debian11
+
+COPY --from=build /go/bin/app /
+CMD ["/app"]
