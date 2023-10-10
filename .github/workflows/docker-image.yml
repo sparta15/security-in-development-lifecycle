@@ -16,12 +16,12 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag security:${GITHUB_SHA}
+      run: docker build . --file Dockerfile --tag security:${{ github.sha }}
 
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: "security:${GITHUB_SHA}"
+        image-ref: 'security:${{ github.sha }}'
         format: 'json'
         exit-code: '1'
         ignore-unfixed: true
