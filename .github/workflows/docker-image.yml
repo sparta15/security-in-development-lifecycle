@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    branches: [ "main", "feat/secure_image" ]
+    branches: [ "main", "feat/add_trivy_to_gh_action" ]
 
 jobs:
 
